@@ -24,8 +24,11 @@
   </listener>
   <context-param>
   <param-name>contextConfigLocation</param-name>
-  <param-value>classpath:com/tgv/config/persistence-context.xml</param-value>
+  <param-value>classpath:com/tgv/config/persistence-context.xml
+  classpath:com/tgv/config/service-context.xml
+  </param-value>
   </context-param>
+  
   <resource-ref>
   <description>Conexion base de datos</description>
   <!-- En ref name lo que le sigue a la barra es siempre el nombre de la base de datos a la que se le pega y siempre comienza con jdbc -->

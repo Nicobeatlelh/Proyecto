@@ -3,6 +3,9 @@
  */
 package com.tgv.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.tgv.pojo.Admin;
+import org.tgv.service.AdminService;
 
 /**
  * @author jperedo
@@ -18,6 +22,9 @@ import org.tgv.pojo.Admin;
  */
 @Controller
 public class AdminController {
+	
+	@Autowired
+	private AdminService adminservice;
 
 	@RequestMapping("/admin")
 	/*
@@ -29,16 +36,26 @@ public class AdminController {
 		Admin admin = new Admin();
 		model.addAttribute("admin", admin);
 		model.addAttribute("resultado", resultado);
+		List<Admin> admins= adminservice.buscarTodos();
+		model.addAttribute("admins", admins);
 		return "administrador";
 	}
 	
 	@RequestMapping(value="/admin/save",method=RequestMethod.POST)
-	public String handlAdmin(@ModelAttribute("admin") Admin adminForm, Model model, RedirectAttributes ra, @RequestParam("fuera") String fuera) {
+//	Se puede pasar un @RequestParam("fuera") String fuera para pasar un valor que no es parte del objeto(POJO)
+	public String handlAdmin(@ModelAttribute("admin") Admin adminForm, Model model, RedirectAttributes ra) {
 		model.addAttribute("adminForm", adminForm);
 		System.out.println("Esto es lo que se graba: "+ adminForm);
-		System.out.println("El request param que recibo es "+ fuera);
-		ra.addFlashAttribute("resultado", "Cambios Realizados con Éxito");
+//		System.out.println("El request param que recibo es "+ fuera);
 		
+		if(adminservice.save(adminForm)) {
+			ra.addFlashAttribute("resultado", "Se han guardado los datos correctamente");
+		}else {
+			ra.addFlashAttribute("resultado", "No se han guardado los datos correctamente");
+		}
 		return "redirect:/admin";
 	}
+	
+	
+	
 }
