@@ -69,13 +69,13 @@ public class AdminDaoImpl implements AdminDao {
 
 	public boolean actualizar(Admin admin) {
 		// BeanPropertySqlParameterSource, porque los campos de nuestra tabla son identicos al de nuestra clase
-		return jdbcTemplate.update("Update admin set nombre:nombre, cargo:cargo, fechaCreacion:fechaCreacion where idAd=:idAd ", 
+		return jdbcTemplate.update("Update admin set nombre=:nombre, cargo=:cargo, fechaCreacion=:fechaCreacion where idAd=:idAd ", 
 				new BeanPropertySqlParameterSource(admin)) == 1;
 	}
 
 	public boolean borrar(int idAd) {
 		// MapSqlParameterSource porque solo enviamos un parametro
-		return jdbcTemplate.update("delete from admin Where idAd=idAd", new MapSqlParameterSource("idAd",idAd)) == 1;
+		return jdbcTemplate.update("delete from admin Where idAd=:idAd", new MapSqlParameterSource("idAd",idAd)) == 1;
 	}
 
 	@Transactional

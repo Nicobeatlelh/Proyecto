@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,15 +48,39 @@ public class AdminController {
 		model.addAttribute("adminForm", adminForm);
 		System.out.println("Esto es lo que se graba: "+ adminForm);
 //		System.out.println("El request param que recibo es "+ fuera);
-		
+		if(adminForm.getIdAd()!=0) {
+			adminservice.actualizar(adminForm);
+		}else {
 		if(adminservice.save(adminForm)) {
 			ra.addFlashAttribute("resultado", "Se han guardado los datos correctamente");
 		}else {
 			ra.addFlashAttribute("resultado", "No se han guardado los datos correctamente");
 		}
+		}
 		return "redirect:/admin";
 	}
 	
-	
+	@RequestMapping(value="/admin/{idAd}/actualizar",method=RequestMethod.GET)
+//	Se puede pasar un @RequestParam("fuera") String fuera para pasar un valor que no es parte del objeto(POJO)
+	public String actualizar(Model model, @PathVariable("idAd") int idAd,  RedirectAttributes ra) {
+		if(adminservice.buscarXId(idAd)!=null) {
+			Admin admin1 = adminservice.buscarXId(idAd);
+			model.addAttribute("admin",admin1);
+		}else {
+			ra.addFlashAttribute("resultado", "No se ha encontrado el Admin que se intenta actualizar");
+		}
+		return "administrador";
+	}
+	// /admin/${ item.idAd }/actualizar
+	@RequestMapping(value="/admin/{idAd}/borrar",method=RequestMethod.GET)
+
+	public String borrar(Model model, @PathVariable("idAd") int idAd,  RedirectAttributes ra) {
+		if(adminservice.borrar(idAd)&&(idAd!=0)) {
+			ra.addFlashAttribute("resultado", "El admin se borró correctamente");
+		}else {
+			ra.addFlashAttribute("resultado", "No se ha podido borrar el admin");
+		}
+		return "redirect:/admin";
+	}
 	
 }

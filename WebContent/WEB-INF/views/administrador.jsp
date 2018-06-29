@@ -28,6 +28,15 @@ Variables desde el ambito de la session: <c:out value="${sessionScope.resultado}
 			<td>Cargo</td>
 			<td><sf:input path="cargo"/></td>
 		</tr>
+		<c:if test = "${admin.idAd!=0}">
+         <tr>
+			<td>Fecha de Creación</td>
+			<td><sf:input path="fechaCreacion"/></td>
+		</tr>
+		<tr>
+		<td><sf:input type="hidden" path="idAd"/></td>
+		</tr>
+      </c:if>
 		<tr>
 			<td></td>
 			<td><input type="submit" value="Guardar Cambios"/></td>
@@ -36,6 +45,7 @@ Variables desde el ambito de la session: <c:out value="${sessionScope.resultado}
 	<table class="table">
 	<thead>
     <tr>
+     <th></th>
       <th scope="col">Id</th>
       <th scope="col">Nombre</th>
       <th scope="col">Cargo</th>
@@ -46,6 +56,7 @@ Variables desde el ambito de la session: <c:out value="${sessionScope.resultado}
    <tbody>
 	<c:forEach items="${ admins }" var="item">
 	 <tr>
+	 <td><a href='<c:url value="/admin/${ item.idAd }/borrar"/>'>X</a></td>
       <th scope="row"><c:out value="${ item.idAd }"/></th>
       <td><c:out value="${ item.nombre }"/></td>
       <td><c:out value="${ item.cargo }"/></td>
@@ -57,6 +68,7 @@ Variables desde el ambito de la session: <c:out value="${sessionScope.resultado}
   </tbody>
 </table>
 </sf:form>
+
 <c:out value="${ resultado }"/>
 </body>
 </html>

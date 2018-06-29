@@ -27,5 +27,21 @@ public class AdminService {
 		
 		return adminDao.buscarTodos();
 	}
+	
+	public Admin buscarXId(int id) {
+		
+		return adminDao.buscarXId(id);
+	}
+
+	public void actualizar(Admin adminForm) {
+
+		adminDao.actualizar(adminForm);
+		
+	}
+
+	public boolean borrar(int idAd) {
+
+		return adminDao.borrar(idAd);
+	}
 
 }
