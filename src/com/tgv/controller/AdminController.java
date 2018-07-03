@@ -60,19 +60,20 @@ public class AdminController {
 		return "redirect:/admin";
 	}
 	
-	@RequestMapping(value="/admin/{idAd}/actualizar",method=RequestMethod.GET)
+	@RequestMapping(value="admin/{idAd}/actualizar")
 //	Se puede pasar un @RequestParam("fuera") String fuera para pasar un valor que no es parte del objeto(POJO)
-	public String actualizar(Model model, @PathVariable("idAd") int idAd,  RedirectAttributes ra) {
+	public String actualizar(Model model, @PathVariable("idAd") int idAd) {
 		if(adminservice.buscarXId(idAd)!=null) {
 			Admin admin1 = adminservice.buscarXId(idAd);
 			model.addAttribute("admin",admin1);
 		}else {
-			ra.addFlashAttribute("resultado", "No se ha encontrado el Admin que se intenta actualizar");
+			model.addAttribute("resultado", "No se ha encontrado el Admin que se intenta actualizar");
 		}
 		return "administrador";
 	}
+	
 	// /admin/${ item.idAd }/actualizar
-	@RequestMapping(value="/admin/{idAd}/borrar",method=RequestMethod.GET)
+	@RequestMapping(value="/admin/{idAd}/borrar")
 
 	public String borrar(Model model, @PathVariable("idAd") int idAd,  RedirectAttributes ra) {
 		if(adminservice.borrar(idAd)&&(idAd!=0)) {

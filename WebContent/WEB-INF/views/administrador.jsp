@@ -7,7 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="<c:url value="resources/css/bootstrap.min.css" />" type="text/css">
+<link rel="stylesheet" href='<c:url value="resources/css/bootstrap.min.css" />' type="text/css">
+<link rel="stylesheet" href='<c:url value="../../resources/css/bootstrap.min.css" />' type="text/css">
 </head>
 <body>
 <h1>Es el administrador</h1>
@@ -42,6 +43,7 @@ Variables desde el ambito de la session: <c:out value="${sessionScope.resultado}
 			<td><input type="submit" value="Guardar Cambios"/></td>
 		</tr>
 	</table>
+	</sf:form>
 	<table class="table">
 	<thead>
     <tr>
@@ -54,20 +56,20 @@ Variables desde el ambito de la session: <c:out value="${sessionScope.resultado}
     </tr>
   </thead>
    <tbody>
-	<c:forEach items="${ admins }" var="item">
+	<c:forEach items="${admins}" var="item">
 	 <tr>
-	 <td><a href='<c:url value="/admin/${ item.idAd }/borrar"/>'>X</a></td>
-      <th scope="row"><c:out value="${ item.idAd }"/></th>
-      <td><c:out value="${ item.nombre }"/></td>
-      <td><c:out value="${ item.cargo }"/></td>
-      <td><c:out value="${ item.fechaCreacion }"/></td>
-      <td><a href='<c:url value="/admin/${ item.idAd }/actualizar"/>'>Actualizar</a></td>
+	 <td><a href='<c:url value="/admin/${item.idAd}/borrar"/>'>X</a></td>
+      <th scope="row"><c:out value="${item.idAd}"/></th>
+      <td><c:out value="${item.nombre}"/></td>
+      <td><c:out value="${item.cargo}"/></td>
+      <td><c:out value="${item.fechaCreacion}"/></td>
+      <td><a href='<c:url value="admin/${item.idAd}/actualizar"/>'>Actualizar</a></td>
     </tr>
     
 </c:forEach>
   </tbody>
 </table>
-</sf:form>
+
 
 <c:out value="${ resultado }"/>
 </body>
